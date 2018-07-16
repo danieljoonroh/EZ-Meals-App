@@ -1,8 +1,7 @@
 # Meal Prep App
 
 ## Intro
-
-# Mobile app created by React Native to help users search and store meals according to their dietary needs and desired calorie intake.  This app was created in a span of one week for our second project at Redwood Code Academy.
+Mobile app created by React Native to help users search and store meals according to their dietary needs and desired calorie intake.  This app was created in a span of one week for our second project at Redwood Code Academy.
 
 ## Goals
 - Build an app that helps users to find different recipes and meals for their meal preparation.
@@ -28,6 +27,4 @@
 - Create a basic CRUD mobile app.
 
 ## HomePage
-![alt text](https://imgur.com/a/Iv1mym3 "Logo Title Text 1")
-
-
+![alt text](https://imgur.com/a/pGRKI5Z "Logo Title Text 1")
