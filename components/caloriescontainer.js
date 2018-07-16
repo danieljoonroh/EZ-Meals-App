@@ -16,7 +16,7 @@ export default class CaloriesContainer extends React.Component {
         calories: '',
         dayOrWeek: '',
         selected: 'mealsFromCalories',
-        imagesTitlesIDs: [],
+        imagesTitlesIDs: []
     }
 
 
@@ -37,6 +37,8 @@ export default class CaloriesContainer extends React.Component {
 
                     let promises = [];
                     let imagesTitlesIDs = [];
+
+                    
 
                     for (var i = 0; i < response.data.meals.length; i++) {
                         var imageObject = {};
