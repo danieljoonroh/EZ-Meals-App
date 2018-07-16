@@ -30,6 +30,6 @@
 <div className="row">
 <img src="https://i.imgur.com/ShsNPLB.png" width="250">
 <img src="https://i.imgur.com/fAnAaGC.png" width="250">
-<img src="https://i.imgur.com/W73HNeT.png" width="250">
+<img src="https://i.imgur.com/AhTDu2V.png" width="250">
 </div>
 
