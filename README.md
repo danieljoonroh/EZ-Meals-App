@@ -27,6 +27,6 @@
 - Create a basic CRUD mobile app.
 
 ## WireFrames
-![alt text](https://i.imgur.com/vEoUQtm.png "Homepage")
-![alt text](https://i.imgur.com/M65Nl2w.png "Pie Chart")
-![alt text](https://i.imgur.com/bDlyRDQ.png "Meals List")
+<img src="https://i.imgur.com/8uQMFag.png" width="300">
+<img src="https://i.imgur.com/VQDegi8.png" width="300">
+<img src="https://i.imgur.com/NvZuX0N.png" width="300">
