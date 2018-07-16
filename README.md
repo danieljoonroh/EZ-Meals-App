@@ -26,5 +26,7 @@
 - Learn and implement React Native to build a a fully functional mobile app.
 - Create a basic CRUD mobile app.
 
-## HomePage
-![alt text](https://i.imgur.com/vEoUQtm.png "Logo Title Text 1")
+## WireFrames
+![alt text](https://i.imgur.com/vEoUQtm.png "Homepage")
+![alt text](https://i.imgur.com/M65Nl2w.png "Pie Chart")
+![alt text](https://i.imgur.com/bDlyRDQ.png "Meals List")
