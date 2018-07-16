@@ -27,4 +27,4 @@
 - Create a basic CRUD mobile app.
 
 ## HomePage
-![alt text](https://i.imgur.com/Iv3u9VV.png "Logo Title Text 1")
+![alt text](https://i.imgur.com/vEoUQtm.png "Logo Title Text 1")
