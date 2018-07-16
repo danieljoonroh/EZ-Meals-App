@@ -27,9 +27,9 @@
 - Create a basic CRUD mobile app.
 
 ## WireFrames
-<div className="row">
-<img src="https://i.imgur.com/8uQMFag.png" width="300">
-<img src="https://i.imgur.com/VQDegi8.png" width="300">
-<img src="https://i.imgur.com/NvZuX0N.png" width="300">
+<div className="row" style= {{ margin: 20 }}>
+<img src="https://i.imgur.com/8uQMFag.png" width="250">
+<img src="https://i.imgur.com/VQDegi8.png" width="250">
+<img src="https://i.imgur.com/NvZuX0N.png" width="250">
 </div>
 
