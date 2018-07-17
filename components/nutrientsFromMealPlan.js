@@ -4,7 +4,6 @@ import { MEALPLANRESULTS, HOME } from './constants';
 import { PieChart } from 'react-native-svg-charts';
 import { MainStyle } from '../styles';;
 
-
 class NutrientsFromMealPlan extends Component {
     constructor(props) {
         super(props);

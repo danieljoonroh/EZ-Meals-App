@@ -4,7 +4,6 @@ import { CALORIESHOME, DISHSEARCH, MEALPLAN, FAVORITES } from './constants'
 import { MainStyle } from '../styles';
 
 export default class Home extends Component {
-
   render() {
     return (
       <ImageBackground style={MainStyle.container} source={require("../images/homebackground.png")}>

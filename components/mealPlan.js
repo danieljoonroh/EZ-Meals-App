@@ -106,7 +106,7 @@ class MealPlan extends React.Component {
         }
         this.props.link(MEALPLANRESULTS, props)
     }
-
+    
     render() {
         return (
             <ImageBackground style={MainStyle.container} source={require("../images/homebackground.png")}>

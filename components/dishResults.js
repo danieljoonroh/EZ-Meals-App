@@ -6,10 +6,11 @@ import { MainStyle } from '../styles';
 
 // extracts by grabbing each key name in the objects with the names provided in the curly brackets
 const DishResults = ({ dishNutritionArray, link }) => {
+
     const colors = ['powderblue', 'pink', 'lightgreen'];
     const data = dishNutritionArray.filter(obj => obj.unit !== 'calories').map((x, index) => ({ ...x, svg: { fill: colors[index] }, key: `${index}` }));
     const caloriesData = dishNutritionArray.find(obj => obj.unit == 'calories')
-
+    
     return (
         <View style={{ flex: 1 }}>
             <View style={{ justifyContent: 'space-between', flexDirection: "row" }} >

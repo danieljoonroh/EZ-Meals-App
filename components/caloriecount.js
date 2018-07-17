@@ -71,7 +71,7 @@ export default class CaloriesContainer extends React.Component {
                 }
             })
     }
-
+    
     render() {
         return (
             <ImageBackground style={MainStyle.container} source={require("../images/homebackground.png")}>

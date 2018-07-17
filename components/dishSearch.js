@@ -25,6 +25,7 @@ class DishSearch extends React.Component {
                 "Accept": "application/json"
             }
         }
+
         axios.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/guessNutrition?title=" + search + "'", config)
             .then((response) => {
                 var nutrients = objectCreatorForDishName(response.data);
@@ -36,7 +37,6 @@ class DishSearch extends React.Component {
                 nutrientsArray[2].type = 'Protein';
                 nutrientsArray[3].type = 'Carbohydrates';
                 console.log('NUTRIENTS ARRAY WITH TYPE', nutrientsArray);
-
                 let modifiedNutrientsArrayForPieChart = nutrientsArray.map(function (obj) {
                     switch (obj.type) {
                         case 'Protein':
@@ -62,7 +62,7 @@ class DishSearch extends React.Component {
         }
         this.props.link(DISHRESULTS, props)
     }
-
+    
     render() {
         return (
             <ImageBackground style={MainStyle.dishSearch} source={require("../images/homebackground.png")}>

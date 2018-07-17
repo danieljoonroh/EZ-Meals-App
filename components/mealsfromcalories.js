@@ -10,7 +10,6 @@ export default class MealsCaloriesList extends React.Component {
     state = {
         calories: []
     }
-
     seeNutrients = id => {
         let config = {
             headers: {
@@ -40,7 +39,6 @@ export default class MealsCaloriesList extends React.Component {
                             return obj
                     }
                 })
-
                 const props = {
                     nutrientsList: modifiedNutrientsForPieChart,
                     imagesTitlesIDs: this.props.imagesTitlesIDs //we need this in order to go back and see the same list that is being shown prior.  App is storing the images, titles, and IDs so that we can access it again.
@@ -53,7 +51,7 @@ export default class MealsCaloriesList extends React.Component {
     saveMeal(item) {
         this.props.saveMeals(item);
     }
-
+    
     render() {
         return (
             <View style={{ flex: 1 }}>
