@@ -29,3 +29,16 @@ export const extractNutrients = html => {
     }
     return nutrients;
 }
+
+export const convertHTML = response => response.replace(/<[^>]*>/g, "")
+
+export const objectCreatorForDishName = (data) => {
+    let newObj = {};
+    for (let key in data) {
+        newObj[key] = {
+            value: data[key].value,
+            unit: data[key].unit
+        }
+    }
+    return newObj;
+}

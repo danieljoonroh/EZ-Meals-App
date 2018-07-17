@@ -1,21 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ImageBackground } from 'react-native';
 import axios from 'axios';
 import { HOME, DISHRESULTS } from './constants';
 import { MainStyle } from '../styles';
 import ApiKey from '../config/apikey';
-
-
-const objectCreatorForDishName = (data) => {
-    let newObj = {};
-    for (let key in data) {
-        newObj[key] = {
-            value: data[key].value,
-            unit: data[key].unit
-        }
-    }
-    return newObj;
-}
+import { objectCreatorForDishName } from './helper';
 
 class DishSearch extends React.Component {
     state = {
@@ -29,7 +18,6 @@ class DishSearch extends React.Component {
         })
     }
 
-
     getNutrientsByDishName = (search) => {
         let config = {
             headers: {
@@ -39,21 +27,11 @@ class DishSearch extends React.Component {
         }
         axios.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/guessNutrition?title=" + search + "'", config)
             .then((response) => {
-                console.log('Dish Search Container', response.data)
-
                 var nutrients = objectCreatorForDishName(response.data);
-
-                console.log("OBJECT CREATOR:", nutrients);
-
                 //converting the nutrients from an object to an array
                 var nutrientsArray = Object.keys(nutrients).map(i => nutrients[i]);
-                console.log(nutrientsArray);
                 nutrientsArray.shift();
-                console.log("Converted Array", nutrientsArray);
-
                 let calories = nutrientsArray.find(x => x.unit === 'calories').value;
-                console.log(calories);
-
                 nutrientsArray[1].type = 'Fat';
                 nutrientsArray[2].type = 'Protein';
                 nutrientsArray[3].type = 'Carbohydrates';
@@ -73,9 +51,7 @@ class DishSearch extends React.Component {
                 })
                 this.setState({
                     dishNutritionArray: modifiedNutrientsArrayForPieChart
-                }, this.getDish) 
-
-               
+                }, this.getDish)
 
             })
     }
@@ -84,27 +60,24 @@ class DishSearch extends React.Component {
         const props = {
             dishNutritionArray: this.state.dishNutritionArray
         }
-
-        console.log('IN DISHSEARCH CONTAINER:', props);
-
         this.props.link(DISHRESULTS, props)
     }
 
     render() {
         return (
-            <ImageBackground style={MainStyle.dishSearch} source={require("../images/veggie5.jpg")}>
+            <ImageBackground style={MainStyle.dishSearch} source={require("../images/homebackground.png")}>
                 <View style={{ alignItems: 'center' }}>
-                    <TouchableOpacity style={styles.button} onPress={() => { this.props.link(HOME) }}>
+                    <TouchableOpacity style={MainStyle.dishSearchButton} onPress={() => { this.props.link(HOME) }}>
                         <Text> Back </Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 25, marginBottom: 40, textAlign: 'center' }}>Enter Dish Name or Food Item</Text>
+                <Text style={{ color: 'black', backgroundColor: 'white', fontWeight: 'bold', fontSize: 25, marginBottom: 40, textAlign: 'center' }}>Enter Dish Name or Food Item</Text>
                 <TextInput
-                    style={styles.textInput}
+                    style={MainStyle.textInput}
                     placeholder='e.g. Spaghetti or Salmon'
                     onChangeText={this.changeHandler} />
                 <TouchableOpacity
-                    style={styles.submitButton}
+                    style={MainStyle.submitButton}
                     onPress={() => this.getNutrientsByDishName(this.state.search)}>
                     <Text>Search</Text>
                 </TouchableOpacity>
@@ -112,45 +85,5 @@ class DishSearch extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    textInput: {
-        width: 230,
-        height: 50,
-        borderColor: 'black',
-        backgroundColor: "white",
-        borderWidth: 3,
-        borderRadius: 10,
-        paddingHorizontal: 5,
-        textAlign: 'center',
-        // marginBottom: 15,
-        // marginTop: 5,
-        // marginLeft:80,
-    },
-    submitButton: {
-        backgroundColor: '#fce5e5',
-        borderWidth: 3,
-        // marginLeft:110,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 170,
-        height: 40,
-        borderRadius: 30,
-        borderColor: "black",
-        marginTop: 20
-    },
-    button: {
-        backgroundColor: '#fce5e5',
-        borderWidth: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 100,
-        height: 40,
-        // marginBottom: 30,
-        borderColor: "black",
-        borderRadius: 30,
-        // marginTop: 25,
-    },
-})
 
 export default DishSearch;

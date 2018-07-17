@@ -1,26 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { HOME, DISHSEARCH } from './constants';
-import { PieChart } from 'react-native-svg-charts'
+import { PieChart } from 'react-native-svg-charts';
+import { MainStyle } from '../styles';
 
 // extracts by grabbing each key name in the objects with the names provided in the curly brackets
 const DishResults = ({ dishNutritionArray, link }) => {
     const colors = ['powderblue', 'pink', 'lightgreen'];
     const data = dishNutritionArray.filter(obj => obj.unit !== 'calories').map((x, index) => ({ ...x, svg: { fill: colors[index] }, key: `${index}` }));
-
-    console.log(data)
     const caloriesData = dishNutritionArray.find(obj => obj.unit == 'calories')
 
-    console.log(caloriesData)
-    // const { calories, carbs, fat, protein } = dishNutritionArray;
-
     return (
-        <View style={styles.container}>
+        <View style={{ flex: 1 }}>
             <View style={{ justifyContent: 'space-between', flexDirection: "row" }} >
-                <TouchableOpacity style={styles.button} onPress={() => { link(DISHSEARCH) }}>
+                <TouchableOpacity style={MainStyle.backHomeButton} onPress={() => { link(DISHSEARCH) }}>
                     <Text>Back</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => { link(HOME) }}>
+                <TouchableOpacity style={MainStyle.backHomeButton} onPress={() => { link(HOME) }}>
                     <Text>Home</Text>
                 </TouchableOpacity>
             </View>
@@ -44,23 +40,5 @@ const DishResults = ({ dishNutritionArray, link }) => {
         </View>
     )
 }
-
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    button: {
-        backgroundColor: 'lightgray',
-        height: 40,
-        width: 100,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 30,
-        marginBottom: 50
-    }
-})
 
 export default DishResults;

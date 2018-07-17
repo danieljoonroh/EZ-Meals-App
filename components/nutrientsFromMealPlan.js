@@ -1,30 +1,32 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
-import { MEALPLANRESULTS, HOME } from './constants'
-import { PieChart } from 'react-native-svg-charts'
+import { Text, View, TouchableOpacity } from 'react-native';
+import { MEALPLANRESULTS, HOME } from './constants';
+import { PieChart } from 'react-native-svg-charts';
+import { MainStyle } from '../styles';;
+
 
 class NutrientsFromMealPlan extends Component {
     constructor(props) {
         super(props);
         this.state = {}
     }
+    
     render() {
+
         const colors = ['powderblue', 'pink', 'lightgreen'];
         const data = this.props.mealPlanNutritionObjects
             .filter(obj => obj.type !== 'Calories')
             .map((x, index) => ({ ...x, svg: { fill: colors[index] }, key: `${index}` }));
-
-        console.log(data)
         const caloriesData = this.props.mealPlanNutritionObjects.find(obj => obj.type == 'Calories')
+
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ justifyContent: 'space-between', flexDirection: "row" }} >
-                    <TouchableOpacity style={styles.button} onPress={() => { 
-                        console.log(this.props.mealPlanObjects);
+                    <TouchableOpacity style={MainStyle.backHomeButton} onPress={() => { 
                         this.props.link(MEALPLANRESULTS, {mealPlanObjects: this.props.mealPlanObjects}) }}>
                         <Text>Back</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => { this.props.link(HOME) }}>
+                    <TouchableOpacity style={MainStyle.backHomeButton} onPress={() => { this.props.link(HOME) }}>
                         <Text>Home</Text>
                     </TouchableOpacity>
                 </View>
@@ -51,16 +53,3 @@ class NutrientsFromMealPlan extends Component {
 }
 
 export default NutrientsFromMealPlan;
-
-const styles = StyleSheet.create({
-    button: {
-        backgroundColor: 'lightgray',
-        height: 40,
-        width: 100,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 30,
-        marginBottom: 50
-    }
-});

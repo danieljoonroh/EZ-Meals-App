@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { MEALSCALORIESLIST, HOME } from './constants'
 import { PieChart } from 'react-native-svg-charts'
+import { MainStyle } from '../styles';
+
 
 export default class NutrientsFromCalories extends React.Component {
     // render is a method that tells react what to display
@@ -11,19 +13,16 @@ export default class NutrientsFromCalories extends React.Component {
         const data = this.props.nutrientsList
             .filter(obj => obj.type !== 'Calories')
             .map((x, index) => ({ ...x, svg: { fill: colors[index] }, key: `${index}` }));
-
-        console.log(data)
         const caloriesData = this.props.nutrientsList.find(obj => obj.type == 'Calories')
-
 
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ justifyContent: 'space-between', flexDirection: "row" }} >
                     {/* imagesTitlesIDs is being sent down to here as well so that we can access it back in the mealscalorieslist.  An analogy is like that of sending a box to a person and it keeps going until the final endpoint just in case it needs to be returned.  */}
-                    <TouchableOpacity style={styles.button} onPress={() => { this.props.link(MEALSCALORIESLIST, { imagesTitlesIDs: this.props.imagesTitlesIDs }) }}>  
+                    <TouchableOpacity style={MainStyle.backHomeButton} onPress={() => { this.props.link(MEALSCALORIESLIST, { imagesTitlesIDs: this.props.imagesTitlesIDs }) }}>  
                         <Text>Back</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => { this.props.link(HOME) }}>
+                    <TouchableOpacity style={MainStyle.backHomeButton} onPress={() => { this.props.link(HOME) }}>
                         <Text>Home</Text>
                     </TouchableOpacity>
                 </View>
@@ -47,18 +46,5 @@ export default class NutrientsFromCalories extends React.Component {
             </View>
         )
     }
-
 }
 
-const styles = StyleSheet.create({
-    button: {
-        backgroundColor: 'lightgray',
-        height: 40,
-        width: 100,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 30,
-        marginBottom: 50
-    }
-});

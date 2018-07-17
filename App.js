@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import Home from './components/homepage';
-import CaloriesContainer from '././components/caloriescontainer';
+import CaloriesContainer from './components/caloriecount';
 import Router from '././components/router'
-import MealsCaloriesList from '././components/mealscalorieslist';
+import MealsCaloriesList from './components/mealsfromcalories';
 import NutrientsFromCalories from '././components/nutrientsfromcalories';
-import DishSearch from '././components/dishSearch';
-import DishResults from '././components/dishResults';
-import MealPlan from '././components/mealPlan';
-import MealPlanResults from '././components/mealPlanResults';
-import NutrientsFromMealPlan from '././components/nutrientsFromMealPlan';
+import DishSearch from './components/dishsearch';
+import DishResults from './components/dishresults';
+import MealPlan from './components/mealplan';
+import MealPlanResults from './components/mealsfrommealplan';
+import NutrientsFromMealPlan from './components/nutrientsfrommealplan';
 import Favorites from '././components/favorites';
-import { MainStyle } from './styles';
-
-
 import {
   HOME,
   CALORIESHOME,
@@ -26,7 +23,6 @@ import {
   DISHRESULTS,
   FAVORITES
 } from '././components/constants';
-
 
 export default class App extends Component {
   state = {
@@ -60,7 +56,6 @@ export default class App extends Component {
     })
     alert('Meal has been removed')
   }
-
 
   render() {
     return (
@@ -115,7 +110,6 @@ export default class App extends Component {
             {...this.state.propsToSend}
             favorites={this.state.favorites}
             removeMeals={this.removeMeals.bind(this)}
-
           />
         </Router>
       </View >
@@ -124,7 +118,7 @@ export default class App extends Component {
 }
 
 
-// Here are sending everything down to the App.js component because this is where our Router component is being imported as well.  We use the router to navigate to 
+// Here we are sending everything down to the App.js component because this is where our Router component is being imported as well.  We use the router to navigate to 
 // to the desired page through the ID we made for each component.  The router then knows which page should show up on the screen.  The tricky part is that we also had to send down props 
 // as well in the router.
 

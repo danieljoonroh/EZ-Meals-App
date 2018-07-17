@@ -1,15 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, ImageBackground } from 'react-native';
-import axios from 'axios';
+import { Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { MEALSCALORIESLIST, HOME } from './constants';
 import { MainStyle } from '../styles';
+import { convertHTML } from './helper';
 import ApiKey from '../config/apikey';
-
-
-
-// helper function to convert HTML to JSON
-const convertHTML = response => response.replace(/<[^>]*>/g, "")
-
+import axios from 'axios';
 
 export default class CaloriesContainer extends React.Component {
     state = {
@@ -19,10 +14,7 @@ export default class CaloriesContainer extends React.Component {
         imagesTitlesIDs: []
     }
 
-
-
     getMealsFromCalories = () => {
-
         let config = {
             headers: {
                 'X-Mashape-Key': ApiKey,
@@ -32,14 +24,9 @@ export default class CaloriesContainer extends React.Component {
 
         axios.get(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/mealplans/generate?targetCalories=${this.state.calories}&timeFrame=${this.state.dayOrWeek}`, config)
             .then(response => {
-
                 if (this.state.dayOrWeek.toLowerCase() == 'day') {
-
                     let promises = [];
                     let imagesTitlesIDs = [];
-
-                    
-
                     for (var i = 0; i < response.data.meals.length; i++) {
                         var imageObject = {};
                         imageObject.image = 'https://spoonacular.com/recipeImages/' + response.data.meals[i].id + '-240x150.jpg'
@@ -48,29 +35,20 @@ export default class CaloriesContainer extends React.Component {
                         imagesTitlesIDs.push(imageObject);
                         promises.push(axios.get(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${imageObject.id}/summary`, config))
                     }
-
                     Promise.all(promises)
                         .then(res => {
                             // res is an array of response objects
                             for (var i = 0; i < res.length; i++) {
-
                                 imagesTitlesIDs[i].summary = convertHTML(res[i].data.summary);
                             }
-
-
                             const props = { imagesTitlesIDs: imagesTitlesIDs };
-
                             this.props.link(MEALSCALORIESLIST, props);
                         })
-
                 } else if (this.state.dayOrWeek.toLowerCase() == 'week') {
                     let promises = [];
-                    // let imagesTitlesIDs = [];
                     let imagesTitlesIDs = [];
                     for (var i = 0; i < response.data.items.length; i++) {
-                        // let convertedObj = response.data.items[i].value;
                         let imageObject = {};
-                        console.log(response.data)
                         let convertedToObject = JSON.parse(response.data.items[i].value) // parse a JSON string to construct the JavaScrpt value.  We needed this to use the access the keys of the object.
                         console.log(convertedToObject);
                         imageObject.title = convertedToObject.title;
@@ -78,17 +56,13 @@ export default class CaloriesContainer extends React.Component {
                         imageObject.image = 'https://spoonacular.com/recipeImages/' + imageObject.id + '-240x150.jpg'
                         imagesTitlesIDs.push(imageObject);
                         promises.push(axios.get(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${imageObject.id}/summary`, config))
-
                     }
-
                     Promise.all(promises)
                         .then(res => {
                             for (var i = 0; i < res.length; i++) {
                                 imagesTitlesIDs[i].summary = convertHTML(res[i].data.summary)
                             }
-
                             const props = { imagesTitlesIDs: imagesTitlesIDs };  // packaging props into an object to send that down
-
                             this.props.link(MEALSCALORIESLIST, props); // sending props down to mealscalorieslist.  link is coming from app.js which takes in both ID and props
                         })
                 }
@@ -98,83 +72,36 @@ export default class CaloriesContainer extends React.Component {
             })
     }
 
-
-
-
-
-    // getMeals = () => {
-
-    //     const props = {
-    //         imagesTitlesIDs: this.state.imagesTitlesIDs,
-    //     };
-
-    //     console.log('IN CALORIES CONTAINER:', props);
-
-    //     this.props.link(MEALSCALORIESLIST, props);
-
-    // }
-
-
     render() {
         return (
-            <ImageBackground style={MainStyle.container} source={require("../images/veggie5.jpg")}>
-
+            <ImageBackground style={MainStyle.container} source={require("../images/homebackground.png")}>
                 <KeyboardAvoidingView
                     style={[MainStyle.container, { marginVertical: 30 }]}
                     behavior="padding"
                 >
-                    <TouchableOpacity style={styles.button} onPress={() => { this.props.link(HOME) }}>
+                    <TouchableOpacity style={MainStyle.button} onPress={() => { this.props.link(HOME) }}>
                         <Text> Back </Text>
                     </TouchableOpacity>
-
-                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 25, marginBottom: 20, textAlign: 'center' }}> Target number of calories per day </Text>
+                    <Text style={{ color: 'black', backgroundColor: 'white', fontWeight: 'bold', fontSize: 25, marginBottom: 20, textAlign: 'center' }}> Target number of calories per day </Text>
                     <TextInput
                         placeholder="e.g. 2000"
-                        style={styles.textInput}
+                        style={MainStyle.textInput}
                         value={this.state.calories}
                         onChangeText={(text) => { this.setState({ calories: text }) }}
                     />
-                    <Text style={{ marginBottom: 10, fontSize: 25, color: 'white', textAlign: 'center', fontWeight: 'bold' }}> Time frame </Text>
+                    <Text style={{ marginBottom: 10, backgroundColor: 'white', fontSize: 25, color: 'black', textAlign: 'center', fontWeight: 'bold' }}> Time frame </Text>
                     <TextInput
                         placeholder="Day or Week"
-                        style={styles.textInput}
+                        style={MainStyle.textInput}
                         value={this.state.dayOrWeek}
                         onChangeText={(text) => { this.setState({ dayOrWeek: text }) }}
                     />
-                    <TouchableOpacity style={styles.button} onPress={this.getMealsFromCalories}>
-                        <Text style={styles.textStyle}>Enter </Text>
+                    <TouchableOpacity style={MainStyle.button} onPress={this.getMealsFromCalories}>
+                        <Text> Enter </Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
             </ImageBackground>
-
         )
     }
 }
 
-const styles = StyleSheet.create({
-    textInput: {
-        width: 230,
-        height: 50,
-        borderColor: 'black',
-        backgroundColor: 'white',
-        borderWidth: 3,
-        borderRadius: 10,
-        marginBottom: 20,
-        paddingHorizontal: 5,
-        textAlign: 'center',
-    },
-    button: {
-        backgroundColor: '#fce5e5',
-        borderWidth: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 100,
-        height: 40,
-        // marginBottom: 30,
-        borderColor: "black",
-        // marginTop: 25,
-        borderRadius: 30,
-        marginBottom: 20
-
-    }
-});
