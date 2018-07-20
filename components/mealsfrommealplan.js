@@ -6,10 +6,9 @@ import { MainStyle } from '../styles';
 import axios from 'axios';
 import ApiKey from '../config/apikey';
 
-class MealPlanResults extends React.Component {
+export default class MealPlanResults extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
     }
 
     seeNutrientsFromMealPlan = id => {
@@ -21,19 +20,19 @@ class MealPlanResults extends React.Component {
         }
         axios.get(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/nutritionWidget?defaultCss=false`, config)
             .then(response => {
-                let convertedNutrients = extractNutrients(response.data)
-                let neededNutrientsForPieChart = convertedNutrients.filter(x => (x.type === 'Calories') || (x.type === 'Fat') || (x.type === 'Protein') || (x.type === 'Carbohydrates'))
+                let convertedNutrients = extractNutrients(response.data);
+                let neededNutrientsForPieChart = convertedNutrients.filter(x => (x.type === 'Calories') || (x.type === 'Fat') || (x.type === 'Protein') || (x.type === 'Carbohydrates'));
                 let calories = neededNutrientsForPieChart.find(x => x.type === 'Calories').value;
                 let modifiedNutrientsForPieChart = neededNutrientsForPieChart.map(function (obj) {
                     switch (obj.type) {
                         case 'Protein':
-                            return { ...obj, value: Math.ceil((((obj.value * 4) / calories) * 100)) }
+                            return { ...obj, value: Math.ceil((((obj.value * 4) / calories) * 100)) };
                         case 'Carbohydrates':
-                            return { ...obj, value: Math.ceil((((obj.value * 4) / calories) * 100)) }
+                            return { ...obj, value: Math.ceil((((obj.value * 4) / calories) * 100)) };
                         case 'Fat':
-                            return { ...obj, value: Math.ceil((((obj.value * 9) / calories) * 100)) }
+                            return { ...obj, value: Math.ceil((((obj.value * 9) / calories) * 100)) };
                         default:
-                            return obj
+                            return obj;
                     }
                 })
                 const props = {
@@ -53,7 +52,7 @@ class MealPlanResults extends React.Component {
             <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
                     <TouchableOpacity style={MainStyle.mealPlanResultsBackButton} onPress={() => { this.props.link(MEALPLAN) }}>
-                        <Text style={{ marginLeft: 35 }}>Back</Text>
+                        <Text style={{ marginLeft: 35 }}> Back </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={MainStyle.mealPlanResultsBackButton} onPress={() => { this.props.link(HOME) }}>
                         <Text style={{ marginLeft: 35 }}> Home </Text>
@@ -65,26 +64,25 @@ class MealPlanResults extends React.Component {
                         <View>
                             <View>
                                 <View style={{ alignItems: 'center', marginTop: 10 }}>
-                                    <Text style={{ textAlign: 'center', fontSize: 30, marginBottom: 15, fontWeight: 'bold' }}>{item.title}</Text>
+                                    <Text style={{ textAlign: 'center', fontSize: 30, marginBottom: 15, fontWeight: 'bold' }}> {item.title} </Text>
                                     <Image style={{ width: 400, height: 250, marginBottom: 20 }} source={{ uri: item.image }} />
-                                    <Text style={{ marginBottom: 15 }}>{item.summary}</Text>
+                                    <Text style={{ marginBottom: 15 }}> {item.summary} </Text>
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                                 <TouchableOpacity style={MainStyle.saveMealSeeNutrients} onPress={this.saveMeal.bind(this, item)}>
-                                    <Text style={MainStyle.textStyle}>Save Meal </Text>
+                                    <Text style={MainStyle.textStyle}> Save Meal </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={MainStyle.saveMealSeeNutrients} onPress={() => { this.seeNutrientsFromMealPlan(item.id) }}>
-                                    <Text style={MainStyle.textStyle}>See Nutrients </Text>
+                                    <Text style={MainStyle.textStyle}> See Nutrients </Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                     }
-                    keyExtractor={(item, index) => index + ''}
+                    keyExtractor={(item, index) => index + ""}
                 />
             </View>
         )
     }
 }
 
-export default MealPlanResults;

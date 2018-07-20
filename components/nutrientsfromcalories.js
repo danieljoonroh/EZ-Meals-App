@@ -1,9 +1,8 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { MEALSCALORIESLIST, HOME } from './constants'
-import { PieChart } from 'react-native-svg-charts'
+import { MEALSCALORIESLIST, HOME } from './constants';
+import { PieChart } from 'react-native-svg-charts';
 import { MainStyle } from '../styles';
-
 
 export default class NutrientsFromCalories extends React.Component {
     // render is a method that tells react what to display
@@ -13,17 +12,17 @@ export default class NutrientsFromCalories extends React.Component {
         const data = this.props.nutrientsList
             .filter(obj => obj.type !== 'Calories')
             .map((x, index) => ({ ...x, svg: { fill: colors[index] }, key: `${index}` }));
-        const caloriesData = this.props.nutrientsList.find(obj => obj.type == 'Calories')
+        const caloriesData = this.props.nutrientsList.find(obj => obj.type == 'Calories');
 
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ justifyContent: 'space-between', flexDirection: "row" }} >
                     {/* imagesTitlesIDs is being sent down to here as well so that we can access it back in the mealscalorieslist.  An analogy is like that of sending a box to a person and it keeps going until the final endpoint just in case it needs to be returned.  */}
                     <TouchableOpacity style={MainStyle.backHomeButton} onPress={() => { this.props.link(MEALSCALORIESLIST, { imagesTitlesIDs: this.props.imagesTitlesIDs }) }}>  
-                        <Text>Back</Text>
+                        <Text> Back </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={MainStyle.backHomeButton} onPress={() => { this.props.link(HOME) }}>
-                        <Text>Home</Text>
+                        <Text> Home </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ alignItems: 'center', marginBottom: 10 }}>
@@ -35,13 +34,13 @@ export default class NutrientsFromCalories extends React.Component {
                     data={data}
                 />
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, color: data[2].svg.fill, marginLeft: 15, textDecorationLine: "underline" }}>PROTEIN: {data[2].value}%</Text>
+                    <Text style={{ fontSize: 20, color: data[2].svg.fill, marginLeft: 15, textDecorationLine: "underline" }}> PROTEIN: {data[2].value}% </Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, color: data[1].svg.fill, marginLeft: 15, textDecorationLine: "underline" }}>CARBS: {data[1].value}% </Text>
+                    <Text style={{ fontSize: 20, color: data[1].svg.fill, marginLeft: 15, textDecorationLine: "underline" }}> CARBS: {data[1].value}% </Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, color: data[0].svg.fill, marginLeft: 15, textDecorationLine: "underline" }}>FAT: {data[0].value}% </Text>
+                    <Text style={{ fontSize: 20, color: data[0].svg.fill, marginLeft: 15, textDecorationLine: "underline" }}> FAT: {data[0].value}% </Text>
                 </View>
             </View>
         )

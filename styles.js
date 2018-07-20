@@ -133,7 +133,7 @@ export const MainStyle = StyleSheet.create({
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'flex-start',
-        marginTop: 30,
+        marginTop: 30
     },
     saveMealSeeNutrients: {
         backgroundColor: 'powderblue',

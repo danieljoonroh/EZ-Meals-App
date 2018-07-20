@@ -6,26 +6,19 @@ import { MainStyle } from '../styles';
 import ApiKey from '../config/apikey';
 import { objectCreatorForDishName } from './helper';
 
-class DishSearch extends React.Component {
+export default class DishSearch extends React.Component {
     state = {
         search: '',
         dishNutritionArray: []
     }
 
-    changeHandler = (text) => {
-        this.setState({
-            search: text
-        })
-    }
-
-    getNutrientsByDishName = (search) => {
+    getNutrientsByDishName = search => {
         let config = {
             headers: {
                 "X-Mashape-Key": ApiKey,
                 "Accept": "application/json"
             }
         }
-
         axios.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/guessNutrition?title=" + search + "'", config)
             .then((response) => {
                 var nutrients = objectCreatorForDishName(response.data);
@@ -36,23 +29,19 @@ class DishSearch extends React.Component {
                 nutrientsArray[1].type = 'Fat';
                 nutrientsArray[2].type = 'Protein';
                 nutrientsArray[3].type = 'Carbohydrates';
-                console.log('NUTRIENTS ARRAY WITH TYPE', nutrientsArray);
                 let modifiedNutrientsArrayForPieChart = nutrientsArray.map(function (obj) {
                     switch (obj.type) {
                         case 'Protein':
-                            return { ...obj, value: Math.ceil((((obj.value * 4) / calories) * 100)) }
+                            return { ...obj, value: Math.ceil((((obj.value * 4) / calories) * 100)) };
                         case 'Carbohydrates':
-                            return { ...obj, value: Math.ceil((((obj.value * 4) / calories) * 100)) }
+                            return { ...obj, value: Math.ceil((((obj.value * 4) / calories) * 100)) };
                         case 'Fat':
-                            return { ...obj, value: Math.ceil((((obj.value * 9) / calories) * 100)) }
+                            return { ...obj, value: Math.ceil((((obj.value * 9) / calories) * 100)) };
                         default:
-                            return obj
+                            return obj;
                     }
                 })
-                this.setState({
-                    dishNutritionArray: modifiedNutrientsArrayForPieChart
-                }, this.getDish)
-
+                this.setState({ dishNutritionArray: modifiedNutrientsArrayForPieChart }, this.getDish)
             })
     }
 
@@ -60,9 +49,9 @@ class DishSearch extends React.Component {
         const props = {
             dishNutritionArray: this.state.dishNutritionArray
         }
-        this.props.link(DISHRESULTS, props)
+        this.props.link(DISHRESULTS, props);
     }
-    
+
     render() {
         return (
             <ImageBackground style={MainStyle.dishSearch} source={require("../images/homebackground.png")}>
@@ -71,19 +60,17 @@ class DishSearch extends React.Component {
                         <Text> Back </Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={{ color: 'black', backgroundColor: 'white', fontWeight: 'bold', fontSize: 25, marginBottom: 40, textAlign: 'center' }}>Enter Dish Name or Food Item</Text>
+                <Text style={{ color: 'black', backgroundColor: 'white', fontWeight: 'bold', fontSize: 25, marginBottom: 40, textAlign: 'center' }}> Enter Dish Name or Food Item </Text>
                 <TextInput
                     style={MainStyle.textInput}
                     placeholder='e.g. Spaghetti or Salmon'
-                    onChangeText={this.changeHandler} />
-                <TouchableOpacity
-                    style={MainStyle.submitButton}
-                    onPress={() => this.getNutrientsByDishName(this.state.search)}>
-                    <Text>Search</Text>
+                    onChangeText={(text) => this.setState({ search: text })}
+                />
+                <TouchableOpacity style={MainStyle.submitButton} onPress={() => this.getNutrientsByDishName(this.state.search)}>
+                    <Text> Search </Text>
                 </TouchableOpacity>
             </ImageBackground>
         )
     }
 }
 
-export default DishSearch;
